@@ -81,12 +81,12 @@ def create_pipeline_graph() -> StateGraph:
         lambda state: "error_handler" if state.get("errors") else "plan_scenes"
     )
     
-    # Split to parallel tasks after planning
-    workflow.add_conditional_edges("plan_scenes", route_after_planning)
-    
-    # Join parallel tasks into synthesis
-    # Note: In LangGraph, edges from multiple nodes to one node wait for all to complete
-    workflow.add_edge("render_audio", "synthesize_video")
+    # Simple sequential execution
+    workflow.add_conditional_edges(
+        "plan_scenes",
+        lambda state: "error_handler" if state.get("errors") else "render_audio"
+    )
+    workflow.add_edge("render_audio", "render_visuals")
     workflow.add_edge("render_visuals", "synthesize_video")
     
     # Finalize

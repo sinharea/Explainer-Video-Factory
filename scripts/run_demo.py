@@ -72,21 +72,21 @@ def main() -> int:
         
         if job.output_video and job.output_video.exists():
             logger.info("cli.success", video_path=str(job.output_video))
-            print(f"\n✅ Video successfully generated at: {job.output_video}")
+            print(f"\n[SUCCESS] Video successfully generated at: {job.output_video}")
             if job.output_subtitle:
-                print(f"📝 Subtitles available at: {job.output_subtitle}")
+                print(f"[SUCCESS] Subtitles available at: {job.output_subtitle}")
             return 0
         else:
             logger.error("cli.failed", error=job.error_message)
-            print(f"\n❌ Pipeline failed: {job.error_message}")
+            print(f"\n[ERROR] Pipeline failed: {job.error_message}")
             return 1
             
     except KeyboardInterrupt:
-        print("\n⚠️ Process interrupted by user.")
+        print("\n[WARNING] Process interrupted by user.")
         return 130
     except Exception as e:
         logger.exception("cli.fatal_error")
-        print(f"\n❌ Fatal error: {e}")
+        print(f"\n[ERROR] Fatal error: {e}")
         return 1
 
 if __name__ == "__main__":
