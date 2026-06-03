@@ -94,7 +94,7 @@ class VideoComposer:
                 
                 # Load image and set duration
                 img_clip = ImageClip(str(scene.visual_path))
-                img_clip = img_clip.set_duration(entry.duration)
+                img_clip = img_clip.with_duration(entry.duration)
                 
                 # Load audio and attach to image
                 audio_clip = AudioFileClip(str(scene.audio_path))
@@ -108,7 +108,7 @@ class VideoComposer:
                         timeline=entry.duration
                     )
                 
-                img_clip = img_clip.set_audio(audio_clip)
+                img_clip = img_clip.with_audio(audio_clip)
                 
                 # Apply crossfade transition if specified
                 # Moviepy concatenate_videoclips handles transitions if we use specific methods,
