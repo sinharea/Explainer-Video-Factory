@@ -1,0 +1,32 @@
+{
+    "name": "default",
+    "description": "Default dark theme for educational videos",
+    "colors": {
+        "primary": "#4F46E5",
+        "secondary": "#7C3AED",
+        "background": "#0F172A",
+        "surface": "#1E293B",
+        "text": "#F8FAFC",
+        "text_secondary": "#94A3B8",
+        "accent": "#06B6D4",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "error": "#EF4444"
+    },
+    "typography": {
+        "title_font_size": 72,
+        "heading_font_size": 48,
+        "body_font_size": 32,
+        "caption_font_size": 24,
+        "subtitle_font_size": 28
+    },
+    "layout": {
+        "margin": 80,
+        "padding": 40,
+        "corner_radius": 20
+    },
+    "transitions": {
+        "default_duration": 0.5,
+        "fade_duration": 0.3
+    }
+}
