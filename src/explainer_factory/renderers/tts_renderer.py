@@ -19,6 +19,31 @@ from explainer_factory.logging import get_logger
 logger = get_logger(__name__)
 
 
+def _probe_audio_duration(file_path: Path) -> float:
+    """Get the true duration of an audio file by decoding it.
+
+    Uses moviepy's AudioFileClip which reads the actual audio stream,
+    giving us the ground-truth playback duration in seconds.
+
+    Args:
+        file_path: Path to the audio file.
+
+    Returns:
+        Duration in seconds.
+    """
+    try:
+        from moviepy import AudioFileClip
+        clip = AudioFileClip(str(file_path))
+        duration = clip.duration
+        clip.close()
+        return duration
+    except Exception:
+        # Fallback: rough estimate from file size (~16 kBps for MP3)
+        if file_path.exists():
+            return file_path.stat().st_size / 16000.0
+        return 0.0
+
+
 class TTSRenderer:
     """Renders text to speech audio using Microsoft Edge TTS.
 
@@ -79,17 +104,11 @@ class TTSRenderer:
                             "duration": chunk["duration"] / 10_000_000,
                         })
 
-            # Calculate total duration from timing data
-            duration = 0.0
-            if word_timings:
-                last = word_timings[-1]
-                duration = last["offset"] + last["duration"]
-
-            # If timing didn't work, estimate from file size
-            if duration == 0.0 and output_path.exists():
-                file_size = output_path.stat().st_size
-                # Rough estimate: ~16kBps for mp3
-                duration = file_size / 16000.0
+            # Always probe the actual file for ground-truth duration.
+            # Word-boundary timing from edge-tts is unreliable and often
+            # returns 0 words, causing massive drift between estimated
+            # and real audio length.
+            duration = _probe_audio_duration(output_path)
 
             logger.info(
                 "tts_renderer.segment_done",
