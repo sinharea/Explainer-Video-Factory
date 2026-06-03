@@ -59,6 +59,9 @@ def create_app() -> FastAPI:
     app.include_router(health.router, prefix="/api/v1")
     app.include_router(render.router, prefix="/api/v1")
 
+    # Ensure directories exist before mounting static files
+    settings.ensure_directories()
+    
     # Static files mounting for served videos
     app.mount("/outputs", StaticFiles(directory=settings.output_dir), name="outputs")
 
