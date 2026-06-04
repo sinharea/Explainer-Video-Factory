@@ -31,7 +31,7 @@ The **Visuals Agent** automatically generates stylized 1080p slide layouts based
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 * **Multi-Agent Orchestration**: Uses LangGraph to manage dedicated Avatar, Visuals, and Synthesis agents with robust error recovery.
 * **Synchronized Timeline**: Automatically probes actual audio file lengths to align narration duration exactly with visual scene display time—ensuring no narration overlap.
@@ -57,7 +57,7 @@ The factory pipeline operates in several distinct stages, orchestrated by LangGr
 
 ---
 
-## 🚀 Quickstart
+##  Quickstart
 
 ### Prerequisites
 
